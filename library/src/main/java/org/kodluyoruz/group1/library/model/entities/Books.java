@@ -59,7 +59,7 @@ public class Books extends BaseEntity {
 
     @Enumerated(value = EnumType.STRING)
     @Column (name = "Book_Status", length = 7, nullable = false)
-    private StatusEnum bookStatus = StatusEnum.ACTIVE ;
+    private StatusEnum status = StatusEnum.ACTIVE ;
 
 /*
     @JoinColumn(name = "Author_ID")

@@ -22,5 +22,5 @@ public class BookDTO extends BaseDTO {
     private String category;
     //private Date createDate;
    // private Date updateDate;
-    private StatusEnum bookStatus;
+    private StatusEnum status;
 }

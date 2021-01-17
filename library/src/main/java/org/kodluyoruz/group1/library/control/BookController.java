@@ -1,61 +1,127 @@
 package org.kodluyoruz.group1.library.control;
 
-
 import lombok.RequiredArgsConstructor;
 import org.kodluyoruz.group1.library.dto.BookDTO;
+import org.kodluyoruz.group1.library.model.entities.Books;
 import org.kodluyoruz.group1.library.service.BookService;
-import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 
-
 @RestController
 @RequiredArgsConstructor
-@RequestMapping
+@RequestMapping("/books")
 
 public class BookController {
+
     private final BookService bookService;
 
-    @GetMapping("/bookList")
-    public String getBooks(Model model) {
-        Collection<BookDTO> allList = bookService.list();
-        model.addAttribute("books", allList);
-        return "book_list";
+   // private final BookRepository bookRepository;
+
+// @GetMapping("/bookList")
+// public String getBookList(Model model){
+//     model.addAttribute("listBook",bookService.getAllBooks());
+//     return "listBook";
+// }
+
+
+@GetMapping("/bookList")
+public Collection<Books> getBookList(){
+    return bookService.getAllBooks();
+}
+
+
+
+//    @GetMapping("/bookList")
+//    public ResponseEntity<Collection<BookDTO>> listAllBooks() {
+//        Collection<BookDTO> getAllBooks = bookService.list();
+//        return ResponseEntity.ok().body(getAllBooks);
+//    }
+
+
+//    @GetMapping("/bookList")
+//    public String bookList(Model model) {
+//        model.addAttribute("listBook", bookService.getAllOrderedBooks());
+//        return "book_list";
+
+
+@PostMapping("/createBook")
+public Books saveBook(@RequestBody BookDTO bookDTO){
+    Books books= bookService.save(bookDTO);
+    return books;
+
+}
+@PutMapping("/updateInfo")
+public Books updateBook(@RequestBody BookDTO bookDTO){
+    Books books= bookService.update(bookDTO);
+    return books;
+}
+    @DeleteMapping("/delete/{id}")
+    public void deleteBook (@PathVariable Long id){
+    bookService.updateBookStatus(id);
     }
 
-
-    @PostMapping("/createBook")
-    public ResponseEntity<BookDTO> create(@RequestBody BookDTO bookDTO) {
-        return ResponseEntity.ok(bookService.create(bookDTO));
+    @GetMapping("/showSearchResult/{bookName}")
+    public Collection<Books> showSearchResult(@PathVariable String bookName){
+    return bookService.getBooksByBookName(bookName);
     }
 
-    @PutMapping("/updateInfo/{id}")
-    public String update (@PathVariable(value="id")  Long id,Model model){
-        model.addAttribute("book", bookService.update(Long id));
-        return "";
-    }BookDTO bookDTO
-    @PutMapping("/updateInfo/{id}")
-    public String Update (@PathVariable(value = "id") long id, Model model) {
-        model.addAttribute("book", bookService.update(Long id));
-        //model.addAttribute("authors", bookService.getAllAuthorForBooks());
-        //model.addAttribute("publishers", bookService.getAllPublisherForBooks());
-        return "update_book";
-    }
+//    @PostMapping("/createBook")
+//    public ResponseEntity<BookDTO> create (@RequestBody BookDTO bookDTO){
+//        return ResponseEntity.ok(bookService.create(bookDTO));
+//    }
+//
+//    @PutMapping("/updateInfo")
+//    public ResponseEntity<BookDTO> update (@RequestBody BookDTO bookDTO){
+//        return ResponseEntity.ok(bookService.update(bookDTO));
+//    }
 
 
 
-    @GetMapping("/showSearchResult/{keyword}")
-    public ResponseEntity<Collection<BookDTO>> findListByKeyword(@PathVariable(name = "keyword", required = true) String keyword) {
-        return ResponseEntity.ok(bookService.findBooksByKeyword(keyword));
-    }
+//    @DeleteMapping("/delete/{id}")
+//    public ResponseEntity<?> delete(@PathVariable ("id") @RequestBody  Long id ){
+//        bookService.delete(id);
+//        return ResponseEntity.ok().build();
+//    }
 
-    @GetMapping("/orderList")
-    public ResponseEntity<Collection<BookDTO>> findListOrderBooks() {
-        Collection<BookDTO> getOrderBooks = bookService.getOrderedBooks();
-        return ResponseEntity.ok().body(getOrderBooks);
-    }
+
+   /*// @RequestMapping(value = "/id", method = RequestMethod.DELETE, consumes = "application/json")
+    @DeleteMapping("/{id}")
+    public void delete(Long id){
+        bookService.delete(id);
+    }*/
+
+
+   /* public ResponseEntity<Long> delete( (@PathVariable Long id )  BaseDTO id) {
+
+        bookService.delete(id);
+        return ResponseEntity.ok().build();
+    }*/
+
+   /* @DeleteMapping(value = "/deleteproductbyid/{id}")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public String deleteProductById(@PathVariable int id) {
+        return service.deleteProductById(id);
+    }*/
+
+
+
+
+
+//    @GetMapping("/showSearchResult/{bookName}")
+//    public ResponseEntity<Collection<Books>> getListByKeyword(@PathVariable (name = "bookName",required = true) String bookName){
+//        return ResponseEntity.ok(bookService.getSearchBook(bookName));
+//    }
+
+
+
+
+
+//    @GetMapping("/orderList")
+//    public ResponseEntity<Collection<BookDTO>> findListOrderBooks(){
+//        Collection<BookDTO> getOrderBooks = bookService.getOrderedBooks();
+//        return ResponseEntity.ok().body(getOrderBooks);
+//    }
 
 
 }
