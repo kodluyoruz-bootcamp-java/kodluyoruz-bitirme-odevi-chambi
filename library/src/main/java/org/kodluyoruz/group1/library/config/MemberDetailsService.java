@@ -1,4 +1,4 @@
-package org.kodluyoruz.group1.library.security.config;
+package org.kodluyoruz.group1.library.config;
 
 import org.kodluyoruz.group1.library.dao.MemberRepository;
 import org.kodluyoruz.group1.library.model.entities.Member;

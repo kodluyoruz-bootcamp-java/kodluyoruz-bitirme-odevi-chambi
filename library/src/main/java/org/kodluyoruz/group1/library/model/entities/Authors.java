@@ -1,6 +1,5 @@
 package org.kodluyoruz.group1.library.model.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,8 +7,7 @@ import lombok.Setter;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.List;
+import java.util.Collection;
 
 @Getter
 @Setter
@@ -24,7 +22,8 @@ public class Authors extends BaseEntity {
 //    @Column(name = "ID")
 //    private Long id;
 
-    @Column(name = "Name_Surname",unique = false , length = 100 , nullable = false)
+   // @Column(name = "Name_Surname",unique = false , length = 100 , nullable = false)
+    @Column(name = "Name_Surname",unique = false , length = 100 )
     private String nameSurname;
 
     @Lob
@@ -43,12 +42,11 @@ public class Authors extends BaseEntity {
     @Column(name = "Update_Date")
     private Date updateDate;*/
 
- /*   @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<BookEntity> books;*/
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Collection<Books> books;
 
-    @JsonIgnore //Belirtilen alanın json'a çevrilmemesini sağlar
-    @ManyToMany(mappedBy = "authors", fetch = FetchType.LAZY)
-    private List<Books> books;
+
+
 
     //bir yazar ---> birden çok kitapla eşleşebilir
 }
