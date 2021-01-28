@@ -1,53 +1,39 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-    <link rel="stylesheet"
-          href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
-          crossorigin="anonymous">
-    <link rel="stylesheet"
-          href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
-          integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
-          crossorigin="anonymous"/>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
-</head>
+<head th:replace="fragments/header :: header"></head>
+
 <body>
+    <nav th:replace="fragments/header :: navigation"></nav>
+    <div class="container">
+        <div>
+            <h1>Yazar Güncelle</h1>
 
-<div class="container">
-    <div>
-        <a class="btn btn-primary" href="./ ">ANASAYFA </a>
-        <h1>Yazar Güncelle</h1>
+            <form action="#" th:action="@{/updateAuthor/{id}(id = ${authorDTO.id})}" th:object="${authorDTO}"
+                th:method="POST">
+                <div class="form-group">
+                    <div class="form-group" style="margin-left: 30px;">
+                        <label for="nameSurname">Yazar Adı(*)</label> </br>
+                        <input type="text" id="nameSurname" name="NameSurname" th:field="*{nameSurname}"
+                            th:required="required">
+                    </div>
 
-        <form action="#" th:action="@{/updateAuthor/{id}(id = ${authorDTO.id})}" th:object="${authorDTO}"
-              th:method="POST">
-            <div class="form-group">
-                <div class="form-group" style="margin-left: 30px;">
-                    <label for="nameSurname">Yazar Adı(*)</label> </br>
-                    <input type="text" id="nameSurname" name="NameSurname" th:field="*{nameSurname}"
-                   th:required="required" >
+                    <div class="form-group" style="margin-left: 30px;">
+                        <label for="about">Yazar Hakkında(*)</label></br>
+                        <input type="text" id="about" class="About" th:field="*{about}" th:required="required">
+                    </div>
+
                 </div>
 
-                <div class="form-group" style="margin-left: 30px;">
-                    <label for="about">Yazar Hakkında(*)</label></br>
-                    <input type="text" id="about" class="About" th:field="*{about}" th:required="required">
-                </div>
+                <button type="submit" class="btn btn-primary">GÜNCELLE</button>
 
-            </div>
+            </form>
+        </div>
 
-            <button type="submit" class="btn btn-primary">GÜNCELLE</button>
 
-        </form>
     </div>
-
-
-</div>
-</div>
-<div style="width: 100%; height: 80px;"></div>
+    </div>
+    <div style="width: 100%; height: 80px;"></div>
 </body>
+
 </html>

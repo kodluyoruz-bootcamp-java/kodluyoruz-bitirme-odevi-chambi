@@ -3,20 +3,19 @@ package org.kodluyoruz.group1.library.service;
 import org.kodluyoruz.group1.library.dto.AuthorDTO;
 import org.kodluyoruz.group1.library.model.entities.Author;
 
-import java.util.Collection;
+import java.util.List;
 
-public interface AuthorService {
+public interface IAuthorService {
+
     Author save(AuthorDTO dto);
 
-    Collection<Author> getAllActive();
+    List<Author> getAllActive();
 
-    Collection<Author> findByNameSurname(String nameSurname);
+    List<Author> getAllByNameSurname(List<String> nameSurname);
 
     void deleteById(Long id);
 
     Author update(Long id, AuthorDTO dto);
 
-
     AuthorDTO getAuthorById(Long id);
-
 }

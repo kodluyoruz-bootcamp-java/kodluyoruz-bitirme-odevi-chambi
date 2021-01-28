@@ -1,35 +1,42 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-
+<html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/header :: header"></head>
-
 <body>
-    <nav th:replace="fragments/header :: navigation"></nav>
-    <div class="container">
-        <div>
-
-            <a th:href="@{/saveBook}">
-                <div class="btn btn-info"><i class="fas fa-plus-circle"></i> Yeni Kitap Ekle</div>
-            </a>
-            <h1>Kitaplar</h1>
-            <table class="table table-striped table-responsive">
-                <thead>
-                    <tr>
-                        <th width="10%">Kitap Adı</th>
-                        <th width="10%">Basımevi</th>
-                        <th width="12%">Yazar Adı Soyadı</th>
-                        <th width="10%">Türü</th>
-                        <th width="10%">Sayfa Sayısı</th>
-                        <th width="10%">Baskı Sayısı </th>
-                        <th width="10%">Dil</th>
-                        <th width="10%">Barkod No</th>
-
-
-                    </tr>
-                </thead>
-
+	<nav th:replace="fragments/header :: navigation"></nav>
+	<div class="container">
+		<span th:switch="${foundedBooksSize}">
+		<span th:case="'0'">
+				<br>
+				<center>
+					<h2>
+						<div class="alert alert-danger">
+							<i class="fas fa-exclamation-triangle"></i> <b>
+								"[[${searchWord}]]"</b> İle İlgili Sonuç Bulunamadı!
+						</div>
+					</h2>
+				</center>
+		</span> <span th:case="*">
+				<h3>
+					<b>"[[${searchWord}]]"</b> İle İlgili Sonuçlar.
+				</h3>
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th >Kitap Adı</th>
+							<th >Basımevi</th>
+							<th >Yazar Adı Soyadı</th>
+							<th >Türü</th>
+							<th >Sayfa Sayısı</th>
+							<th >Baskı Sayısı </th>
+							<th >Dil</th>
+							<th >Barkod No</th>
+	
+	
+						</tr>
+					</thead>
+					
                 <tbody>
-                    <tr th:each="book, stat : ${listbook}" th:object="${book}">
+                    <tr th:each="book, stat : ${foundedBooks}" th:object="${book}">
                         <td th:text="${book.bookName}"></td>
                         <td th:text="${book.publisherName}"></td>
                         <td>
@@ -43,7 +50,6 @@
                         <td th:text="${book.languagesEnum}"></td>
                         <td th:text="${book.isbn}"></td>
 
-
                         <td><a th:href="@{/update/{id}(id=${book.id})}" class="btn btn-info" th:method="GET">
                                 <i class="fas fa-edit"></i> GÜNCELLE </a>
                             <form action="#" th:action="@{/delete/{id}(id = ${book.id})}" th:method="POST">
@@ -52,12 +58,9 @@
                         </td>
                     </tr>
                 </tbody>
-
-            </table>
-
-        </div>
-    </div>
-    <div style="width:100%; height:100px;"></div>
+				</table>
+		</span>
+		</span>
+	</div>
 </body>
-
 </html>
